@@ -1,0 +1,18 @@
+.react-tel-input {
+    height: 56px !important;
+    width: 100% !important;
+}
+
+.react-tel-input .form-control:focus {
+    border-color: #309b42;
+    box-shadow: none !important;
+}
+
+.react-tel-input:focus .special-label {
+    color: #309b42;   
+}
+
+.react-tel-input input {
+    width: 100% !important;
+    height: 100% !important;
+}

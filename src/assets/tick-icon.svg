@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <filter id="ngalefmeva" width="110.5%" height="109.8%" x="-5.2%" y="-4.9%" filterUnits="objectBoundingBox">
+            <feOffset in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/>
+            <feColorMatrix in="shadowBlurOuter1" result="shadowMatrixOuter1" values="0 0 0 0 0.121568627 0 0 0 0 0.160784314 0 0 0 0 0.2 0 0 0 0.1 0"/>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g fill="#309B42">
+            <g filter="url(#ngalefmeva)" transform="translate(-954 -317) translate(792 250)">
+                <g>
+                    <path d="M9.863 18c-.276 0-.54-.114-.729-.315l-4.863-5.179c-.379-.402-.358-1.035.044-1.413.403-.378 1.036-.358 1.413.044l4.125 4.391 8.408-9.202c.374-.409 1.006-.436 1.414-.064.407.372.435 1.005.063 1.412l-9.137 10c-.187.206-.453.324-.73.326h-.008z" transform="translate(162 67)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
