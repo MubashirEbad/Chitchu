@@ -21,9 +21,9 @@ import { useHistory } from "react-router-dom";
 import { DashboardContext } from "../dashboard.context";
 const HomePage = () => {
   const {
-    loading
+    loading,
+    step, setStep,
   } = React.useContext(DashboardContext)
-  const [step, setStep] = React.useState(3);
   const [currentWidth, setCurrentWidth] = React.useState(window.innerWidth);
 
   const { push } = useHistory();
@@ -59,7 +59,7 @@ const HomePage = () => {
       }
       <DashboardWrapper>
         <MainContainerWrapper loading={loading}>
-          <SignInButtonContainer onClick={handleSignIn}> Sign In </SignInButtonContainer>
+          <SignInButtonContainer onClick={handleSignIn}> Admin Login </SignInButtonContainer>
           <Image src={LogoIcon} />
           <MarginTop marginTop={16}>
             <Stepper current={step} direction={currentWidth > 796 ? "horizontal" : "vertical"}>

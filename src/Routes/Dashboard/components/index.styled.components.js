@@ -15,6 +15,9 @@ const DashboardMainWrapper = styled.div`
   padding-bottom: 20px;
   user-select: none;
   background-color: #f7f7f7;
+  @media(max-width: 600px) {
+    padding-bottom: 0;
+  }
 `;
 
 const DashboardWrapper = styled.div`
@@ -98,7 +101,7 @@ const CenterAlign = styled.div`
 `;
 
 const Container = styled.div`
-  height: 200px;
+  min-height: 200px;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -171,7 +174,6 @@ const SuccessIcon = styled(TickIcon)`
 const SignInButtonContainer = styled.div`
   position: absolute;
   height: 40px;
-  width: 82px;
   padding: 0 14px;
   background-color: #8080802b;
   right: 32px;
@@ -181,6 +183,14 @@ const SignInButtonContainer = styled.div`
   font-weight: 600;
   font-family: 'lato';
   cursor: pointer;
+
+  @media(max-width: 480px) {
+    height: 34px;
+    padding: 0 8px;
+    right: 8px;
+    font-size: 14px;
+    padding-top: 4px;
+  }
 `;
 
 const SearchFieldContainer = styled.div`
@@ -247,13 +257,14 @@ const EachTime = styled.div`
   border-radius: 8px;
   font-size: 16px;
   padding: 0 16px 0 10px;
-  background-image: linear-gradient(225deg,#fe563b,#d8214d);
+  background-image: ${props => props.first ? "linear-gradient(225deg,#fe563b,#d8214d)" : "linear-gradient(225deg,#096dd9,#1890ff)"};
   color: #fff!important;
   justify-content: center;
   font-weight: bold;
   justify-self: center;
   cursor: pointer;
   text-align: center;
+  box-shadow: ${props => props.selected && "rgb(31 41 51) 0px 0px 10px 0px"};
 
   @media(max-width: 600px) {
     :nth-child(even) {
@@ -274,6 +285,24 @@ const LoadingContainer = styled.div`
 `;
 
 const Loader = styled(Spin)``;
+
+const SubTitle = styled.p`
+  font-family: ${(props) => props.theme.paragraph.latoPara};
+  font-size: 14px;
+  color: #1f2933;
+  margin: 0;
+  font-weight: bold;
+  text-transform: capitalize;
+`;
+
+const SubTitleText = styled.a`
+  font-family: ${(props) => props.theme.paragraph.latoPara};
+  font-size: 13px;
+  color: #40a9ff;
+  margin: 0;
+  font-weight: bold;
+  text-transform: capitalize;
+`;
 
 export {
   DashboardMainWrapper,
@@ -307,4 +336,6 @@ export {
   EachTime,
   Loader,
   LoadingContainer,
+  SubTitle,
+  SubTitleText
 };

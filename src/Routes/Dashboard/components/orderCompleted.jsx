@@ -32,7 +32,7 @@ const OrderCompleted = (props) => {
                         size="large"
                         marginTop="0px"
                         label="Tilaa uudelleen"
-                        onClick={() => setStep(4)}
+                        onClick={() => setStep(0)}
                         textCase="uppercase"
                     />
                 </CenterAlign>

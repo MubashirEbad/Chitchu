@@ -62,12 +62,9 @@ const MaterialDropdown = (props) => {
             onChange={(e) => handleOptionChange(e)}
             label={title}
           >
-            <MenuItem value="">
-              <em>Select</em>
-            </MenuItem>
             {filterOptions.map((item, index) => {
               return (
-                <MenuItem value={item.value} id={item.id}>
+                <MenuItem value={item.value} id={item.id} disabled={item.disabled}>
                   {item.label}
                 </MenuItem>
               );

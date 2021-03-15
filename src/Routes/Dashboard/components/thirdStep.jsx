@@ -23,9 +23,20 @@ const ThirdStep = (props) => {
         for (let a = 0; a < timeIntervalsList.length; a += 2) {
             options.push(
                 <TimesContainer>
-                    <EachTime onClick={() => setTime(timeIntervalsList[a])}>{timeIntervalsList[a].label}</EachTime>
+                    <EachTime
+                        selected={timeIntervalsList[a].label === time?.label}
+                        first={a === 0}
+                        onClick={() => setTime(timeIntervalsList[a])}>
+                        {timeIntervalsList[a].label}
+                    </EachTime>
                     {
-                        timeIntervalsList[a + 1] && <EachTime onClick={() => setTime(timeIntervalsList[a + 1])}>{timeIntervalsList[a + 1].label}</EachTime>
+                        timeIntervalsList[a + 1] && (
+                            <EachTime
+                                selected={timeIntervalsList[a + 1].label === time?.label}
+                                onClick={() => setTime(timeIntervalsList[a + 1])}>
+                                {timeIntervalsList[a + 1].label}
+                            </EachTime>
+                        )
                     }
                 </TimesContainer>
             )
@@ -36,6 +47,9 @@ const ThirdStep = (props) => {
     return (
         <React.Fragment>
             {renderOptions()}
+            <MarginTop marginTop={16}>
+                <HintText> Normaali toimitusaika on 59 minuuttia </HintText>
+            </MarginTop>
             <MarginTop marginTop={48}>
                 <RightAlign>
                     <PrimaryButton

@@ -37,22 +37,24 @@ const SecondStep = (props) => {
     }, [currentAddress])
 
     const initializeMap = async () => {
+        console.log(window);
         autoComplete = await new window.google.maps.places.Autocomplete(
             document.getElementById("autoComplete"), {
-            types: ['establishment'],
+            // types: ['establishment'],
             fields: ['place_id', 'geometry', 'name']
         })
         autoComplete.addListener('place_changed', onPlaceChanged)
     }
 
     const onPlaceChanged = () => {
-        console.log("came");
         const place = autoComplete.getPlace();
         if (place.geometry) {
             const { lat, lng } = place.geometry.location
+            console.log(lat(), lng())
             setCurrentAddress({
                 lat: lat(),
                 lng: lng(),
+                location: autoComplete?.gm_accessors?.place?.De?.formattedPrediction || place?.name || "----"
             })
         } else {
             setCurrentAddress(null);
@@ -60,23 +62,80 @@ const SecondStep = (props) => {
         }
     }
 
+    // const calculateDistance = () => {
+    //     const lat = currentAddress.lat;
+    //     const lng = currentAddress.lng;
+    //     const R = 3958.8; // Radius of the Earth in miles
+
+    //     const storeLat = 60.390040 * (Math.PI / 180); // Convert degrees to radians
+    //     const rlat2 = lat * (Math.PI / 180); // Convert degrees to radians
+    //     const difflat = rlat2 - storeLat; // Radian difference (latitudes)
+    //     const difflon = (lng - 25.651800) * (Math.PI / 180); // Radian difference (longitudes)
+
+    //     const tempDistance = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat / 2) * Math.sin(difflat / 2) + Math.cos(storeLat) * Math.cos(rlat2) * Math.sin(difflon / 2) * Math.sin(difflon / 2)));
+    //     setDistance(tempDistance);
+    //     console.log(tempDistance);
+    //     return tempDistance * 1.6;
+    // }
+
     const calculateDistance = () => {
-        console.log(currentAddress);
-        const lat = currentAddress.lat;
-        const lng = currentAddress.lng;
-        const R = 3958.8; // Radius of the Earth in miles
+        var directionsService = new window.google.maps.DirectionsService();
+        const route = {
+            origin: "Lidl Näsi, Maistraatinkatu 2, 06100 Porvoo, Finland",
+            destination: currentAddress.location,
+            travelMode: 'DRIVING'
+        }
 
-        const storeLat = 60.390040 * (Math.PI / 180); // Convert degrees to radians
-        const rlat2 = lat * (Math.PI / 180); // Convert degrees to radians
-        const difflat = rlat2 - storeLat; // Radian difference (latitudes)
-        const difflon = (lng - 25.651800) * (Math.PI / 180); // Radian difference (longitudes)
-
-        const tempDistance = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat / 2) * Math.sin(difflat / 2) + Math.cos(storeLat) * Math.cos(rlat2) * Math.sin(difflon / 2) * Math.sin(difflon / 2)));
-        setDistance(tempDistance);
-        return tempDistance * 1.6;
+        directionsService.route(route, (response, status) => { // anonymous function to capture directions
+            if (status !== 'OK') {
+                window.alert('Directions request failed due to ' + status);
+                return;
+            } else {
+                var directionsData = response.routes[0].legs[0]; // Get data about the mapped route
+                if (!directionsData) {
+                    window.alert('Directions request failed');
+                    return;
+                }
+                else {
+                    setDistance(parseFloat(directionsData.distance.text.split(" ")[0]));
+                }
+            }
+        });
     }
 
-    console.log(distance);
+    // const calculateDistance = () => {
+    //     let lat1 = 60.390040;
+    //     let lat2 = currentAddress.lat;
+    //     let lng1 = 25.651800;
+    //     let lng2 = currentAddress.lng;
+
+    //     let R = 6378137;
+    //     let dLat = degreesToRadians(lat2 - lat1);
+    //     let dLong = degreesToRadians(lng2 - lng1);
+
+    //     let a = Math.sin(dLat / 2)
+    //         *
+    //         Math.sin(dLat / 2)
+    //         +
+    //         Math.cos(degreesToRadians(lat1))
+    //         *
+    //         Math.cos(degreesToRadians(lat1))
+    //         *
+    //         Math.sin(dLong / 2)
+    //         *
+    //         Math.sin(dLong / 2);
+
+    //     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    //     let distance = R * c;
+
+    //     console.log(distance);
+
+    //     return distance;
+    // }
+
+    const degreesToRadians = (degrees) => {
+        return degrees * Math.PI / 180;
+    }
 
     return (
         <React.Fragment>
@@ -93,11 +152,11 @@ const SecondStep = (props) => {
             />
             <MarginTop marginTop={32}>
                 <OutlineTextField
+                    required={true}
                     value={building}
-                    textfieldType="number"
                     id="outlined-size-small"
                     label="Rappu ja asunnen numero"
-                    placeholder=""
+                    placeholder="esim. A 10"
                     variant="outlined"
                     onChange={setBuilding}
                     marginTop="0 !important"
@@ -133,7 +192,7 @@ const SecondStep = (props) => {
                             type="submit"
                             size="large"
                             marginTop="0px"
-                            disabled={!(currentAddress)}
+                            disabled={!(currentAddress && distance && distance < 10 && building)}
                             label="Jatka"
                             onClick={() => setStep(2)}
                             textCase="uppercase"
@@ -146,6 +205,3 @@ const SecondStep = (props) => {
 }
 
 export default SecondStep;
-// export default GoogleApiWrapper({
-//     apiKey: "AIzaSyAgp_YFhuJg0LqMJT03VG2lFCEP-yb0P3M"
-// })(SecondStep)

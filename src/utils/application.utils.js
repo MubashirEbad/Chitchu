@@ -67,11 +67,13 @@ export const citiesList = [
   },
   {
     value: "Espoo",
-    label: "Espoo",
+    label: "Espoo (tulossa pian)",
+    disabled: true
   },
   {
     value: "Vantaa",
     label: "Vantaa (tulossa pian)",
+    disabled: true
   },
 ]
 export const storesList = [
@@ -127,8 +129,8 @@ export const storesList = [
 
 export const timeIntervalsList = [
   {
-    value: "Normaali toimitusaika on 59 minuuttia",
-    label: "Normaali toimitusaika on 59 minuuttia",
+    value: "HETI",
+    label: "HETI",
   },
   {
     value: "12-14",

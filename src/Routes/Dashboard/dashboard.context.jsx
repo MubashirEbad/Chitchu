@@ -1,4 +1,5 @@
 import React from "react";
+import { List } from "antd";
 
 const DashboardContext = React.createContext({});
 
@@ -6,7 +7,7 @@ const DashboardContextProvider = ({ children }) => {
   const [city, setCity] = React.useState(null);
   const [store, setStore] = React.useState(null);
   const [currentAddress, setCurrentAddress] = React.useState("");
-  const [time, setTime] = React.useState("");
+  const [time, setTime] = React.useState(null);
   const [description, setDescription] = React.useState("");
   const [otherInfo, setOtherInfo] = React.useState("");
   const [name, setName] = React.useState("");
@@ -14,38 +15,88 @@ const DashboardContextProvider = ({ children }) => {
   const [building, setBuilding] = React.useState("");
   const [file, setFile] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [step, setStep] = React.useState(0);
 
   React.useEffect(() => {
-    submitForm();
+    // submitForm();
   }, [])
 
   const submitForm = () => {
-    // setLoading(true);
-    if (window.Email) {
-      const secureToken = "b068284f-b426-4d6a-8ffb-b5bd894bbfa0";
-      const emailBody = `
-      Sender: Mubashir\n
-      Email: Somethingggg\n
-      Message: Email Body
+    setLoading(true);
+    const emailBody = `
+      City: ${city}\n<br>
+      Store name: ${store || "----"}\n<br>
+      Address: ${currentAddress.location}\n<br>
+      Building: ${building || "----"}\n<br>
+      Delivery Time: ${time && time.value || "----"}\n<br>
+      Description: ${description || "----"}\n<br>
+      Other Info: ${otherInfo || "----"}\n<br>
+      Name: ${name || "----"}\n<br>
+      Phone: ${phone || "----"}\n<br>
       `
-      window.Email.send({
-        SecureToken: secureToken,
-        // Host: "smtp.gmail.com",
-        // Username: "nopeaKettu1@gmail.com",
-        // Password: "Emirates/123",
+    if (window.Email) {
+      const emailConfig = {
+        Host: "smtp.gmail.com",
+        Username: "nopeaKettu1@gmail.com",
+        Password: "mdecqghrkxqkmmps",
         To: 'mubashir.ebad@gmail.com',
         From: 'nopeaKettu1@gmail.com',
         Subject: "New Order",
         Body: emailBody,
-      })
-        .then(() => alert("Order Submitted"))
-        .catch(err => alert("Order Could Not Be Submitted"))
+      }
+
+      if (file) {
+        toBase64(file)
+          .then(res => {
+            console.log(res);
+            emailConfig["Attachments"] = [{
+              name: "list",
+              data: res
+            }]
+          })
+          .catch(err => {
+            console.log(err);
+
+          })
+          .finally(() => {
+
+            window.Email.send(emailConfig)
+              .then(() => {
+                alert("Order Submitted");
+                setLoading(false);
+                setStep(4);
+              })
+              .catch(err => {
+                alert("Order Could Not Be Submitted");
+              })
+          })
+      } else {
+        window.Email.send(emailConfig)
+          .then(() => {
+            alert("Order Submitted");
+            setLoading(false);
+            setStep(4);
+          })
+          .catch(err => {
+            alert("Order Could Not Be Submitted");
+          })
+      }
     }
   }
+
+  const toBase64 = file => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+
+  console.log(store);
 
   return (
     <DashboardContext.Provider
       value={{
+        step, setStep,
         time, setTime,
         city, setCity,
         name, setName,
@@ -57,6 +108,8 @@ const DashboardContextProvider = ({ children }) => {
         otherInfo, setOtherInfo,
         description, setDescription,
         currentAddress, setCurrentAddress,
+
+        submitForm
 
       }}
     >

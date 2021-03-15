@@ -55,10 +55,7 @@ const UploadFiles = (props) => {
         beforeUpload={beforeUpload}
       >
         <UploadContainer>
-          <Title>
-            {" "}
-            Lataa pdf <SubTitle> Sella </SubTitle>{" "}
-          </Title>
+          <Title> <SubTitle> Lataa pdf </SubTitle> </Title>
         </UploadContainer>
       </FileSelect>
       {fileSelected && (

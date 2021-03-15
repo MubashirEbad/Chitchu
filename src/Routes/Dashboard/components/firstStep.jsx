@@ -19,7 +19,7 @@ const FirstStep = (props) => {
                 value={city}
                 height="56px"
                 width="100%"
-                title="kaupunki list"
+                title="Valitse Kaupunki"
                 filterOptions={citiesList}
                 onOptionClick={setCity}
             />
@@ -29,7 +29,7 @@ const FirstStep = (props) => {
                     value={store}
                     height="56px"
                     width="100%"
-                    title="kaupat list"
+                    title="Valitse Kauppa"
                     filterOptions={storesList}
                     onOptionClick={setStore}
                 />
