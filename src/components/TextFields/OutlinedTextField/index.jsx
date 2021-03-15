@@ -8,9 +8,9 @@ const TextField = styled(Field)`
     margin-top: ${(props) => props.marginTop};
     div input {
         text-transform: ${(props) =>
-          props.textfieldType === "code" && "uppercase !important"}
+    props.textfieldType === "code" && "uppercase !important"}
         letter-spacing: ${(props) =>
-          props.textfieldType === "code" && "5px !important"};
+    props.textfieldType === "code" && "5px !important"};
     }
 `;
 
@@ -27,9 +27,11 @@ const OutlinedTextField = (props) => {
     onChange: setText,
     marginTop = "40px !important",
     textfieldType = null,
+    handleOnFocus = () => { }
   } = props;
   return (
     <TextField
+      autoComplete="off"
       disabled={disabled}
       type={textfieldType || "text"}
       required={required}
@@ -41,6 +43,7 @@ const OutlinedTextField = (props) => {
       placeholder={placeholder}
       variant="outlined"
       marginTop={marginTop}
+      onFocus={handleOnFocus}
       onChange={(event) => {
         const textValue = event.target.value;
         // if (setText && textValue.length < 41) {

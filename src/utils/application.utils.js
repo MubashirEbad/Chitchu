@@ -51,25 +51,6 @@ export const InitialCapitalize = (value, typeCase) => {
   return data;
 };
 
-export const getGreetingsText = () => {
-  const {
-    goodMorning,
-    goodAfternoon,
-    goodEvening,
-    goodNight,
-  } = allTranslations;
-  const time = new Date().getHours();
-  const timeText =
-    time < 12
-      ? goodMorning
-      : time < 17
-        ? goodAfternoon
-        : time < 20
-          ? goodEvening
-          : goodNight;
-  return timeText;
-};
-
 export const showNotification = (title, type, duration, description) => {
   // openNotification({
   //   title,
@@ -81,16 +62,16 @@ export const showNotification = (title, type, duration, description) => {
 
 export const citiesList = [
   {
-    value: "Poorvo",
-    label: "Poorvo",
-  },
-  {
-    value: "Vanta",
-    label: "Vanta (Coming Soon)",
+    value: "Porvoo",
+    label: "Porvoo",
   },
   {
     value: "Espoo",
-    label: "Espoo (Coming Soon)",
+    label: "Espoo",
+  },
+  {
+    value: "Vantaa",
+    label: "Vantaa (tulossa pian)",
   },
 ]
 export const storesList = [
@@ -103,55 +84,51 @@ export const storesList = [
     label: "S-Market Näsi",
   },
   {
-    value: "K-SuperMarket Tarmola",
-    label: "K-SuperMarket Tarmola",
-  },
-  {
     value: "K-CityMarket Porvoo",
     label: "K-CityMarket Porvoo",
   },
-  {
-    value: "Shell Kuninkaanportti 24/7",
-    label: "Shell Kuninkaanportti 24/7",
-  },
-  {
-    value: "Tokmanni Porvoo",
-    label: "Tokmanni Porvoo",
-  },
-  {
-    value: "K-Rauta Porvoo",
-    label: "K-Rauta Porvoo",
-  },
-  {
-    value: "Rusta Porvoo",
-    label: "Rusta Porvoo",
-  },
-  {
-    value: "Motonet Porvoo",
-    label: "Motonet Porvoo",
-  },
-  {
-    value: "Gigantti Porvoo",
-    label: "Gigantti Porvoo",
-  },
-  {
-    value: "Power Porvoo",
-    label: "Power Porvoo",
-  },
-  {
-    value: "Sokos Porvoo",
-    label: "Sokos Porvoo",
-  },
-  {
-    value: "Clas-ohlson Porvoo",
-    label: "Clas-ohlson Porvoo",
-  },
+  // {
+  //   value: "Shell Kuninkaanportti 24/7",
+  //   label: "Shell Kuninkaanportti 24/7",
+  // },
+  // {
+  //   value: "Tokmanni Porvoo",
+  //   label: "Tokmanni Porvoo",
+  // },
+  // {
+  //   value: "K-Rauta Porvoo",
+  //   label: "K-Rauta Porvoo",
+  // },
+  // {
+  //   value: "Rusta Porvoo",
+  //   label: "Rusta Porvoo",
+  // },
+  // {
+  //   value: "Motonet Porvoo",
+  //   label: "Motonet Porvoo",
+  // },
+  // {
+  //   value: "Gigantti Porvoo",
+  //   label: "Gigantti Porvoo",
+  // },
+  // {
+  //   value: "Power Porvoo",
+  //   label: "Power Porvoo",
+  // },
+  // {
+  //   value: "Sokos Porvoo",
+  //   label: "Sokos Porvoo",
+  // },
+  // {
+  //   value: "Clas-ohlson Porvoo",
+  //   label: "Clas-ohlson Porvoo",
+  // },
 ]
 
 export const timeIntervalsList = [
   {
-    value: "HETI",
-    label: "HETI",
+    value: "Normaali toimitusaika on 59 minuuttia",
+    label: "Normaali toimitusaika on 59 minuuttia",
   },
   {
     value: "12-14",
@@ -174,3 +151,18 @@ export const timeIntervalsList = [
     label: "22-24",
   }
 ]
+
+export const calculateFileSize = (value) => {
+  if (value) {
+    const parsedValue = parseInt(value);
+    let newValue;
+    if (parsedValue >= 1048576) {
+      newValue = `${(parsedValue / 1048576).toFixed(2)} MB`;
+    } else if (parsedValue >= 1024) {
+      newValue = `${(parsedValue / 1024).toFixed(2)} KB`;
+    } else {
+      newValue = `${parsedValue} bytes`;
+    }
+    return newValue;
+  }
+};

@@ -52,7 +52,7 @@ const SignIn = (props) => {
         <OutlineTextField
           value={email}
           id="outlined-size-small"
-          label={allTranslations.email}
+          label="Email"
           placeholder="eg: john@xsolarsystems.com"
           variant="outlined"
           onChange={setEmail}
@@ -60,9 +60,9 @@ const SignIn = (props) => {
         <PasswordWrapper>
           <PasswordField
             value={password}
-            label={allTranslations.password}
+            label="Password"
             setPassword={setPassword}
-            placeholder={allTranslations.password}
+            placeholder="Password"
           />
         </PasswordWrapper>
         <OtherInfo>
@@ -74,7 +74,7 @@ const SignIn = (props) => {
           />
           <RememberMe onClick={() => setChecked(!checked)}>
             {" "}
-            {allTranslations.rememberMe}{" "}
+            Remember Me
           </RememberMe>
         </OtherInfo>
         {error !== "" && <AccountError> {error} </AccountError>}
@@ -82,7 +82,7 @@ const SignIn = (props) => {
           type="submit"
           marginTop="32px"
           size="large"
-          label={allTranslations.buttons.letMeIn}
+          label="Let Me In"
           loading={loading}
           disabled={!(email && password)}
           onClick={handleSignIn}

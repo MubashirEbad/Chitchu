@@ -147,4 +147,6 @@ max-width: 500px;
   box-shadow: 0 0 10px 0 rgb(31 41 51 / 33%);
   border-radius: 6px;
   background-color: white;
+  top: 58px !important;
+  min-width: 100% !important;
 }

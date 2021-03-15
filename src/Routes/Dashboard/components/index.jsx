@@ -8,6 +8,8 @@ import {
   EachStep,
   MarginTop,
   SignInButtonContainer,
+  Loader,
+  LoadingContainer,
 } from "./index.styled.components";
 import { LogoIcon } from 'assets';
 import FirstStep from "./firstStep";
@@ -16,8 +18,12 @@ import ThirdStep from "./thirdStep";
 import FourthStep from "./fourthStep";
 import OrderCompleted from "./orderCompleted";
 import { useHistory } from "react-router-dom";
+import { DashboardContext } from "../dashboard.context";
 const HomePage = () => {
-  const [step, setStep] = React.useState(0);
+  const {
+    loading
+  } = React.useContext(DashboardContext)
+  const [step, setStep] = React.useState(3);
   const [currentWidth, setCurrentWidth] = React.useState(window.innerWidth);
 
   const { push } = useHistory();
@@ -44,19 +50,26 @@ const HomePage = () => {
 
   return (
     <DashboardMainWrapper>
+      {
+        loading && (
+          <LoadingContainer>
+            <Loader />
+          </LoadingContainer>
+        )
+      }
       <DashboardWrapper>
-        <MainContainerWrapper>
+        <MainContainerWrapper loading={loading}>
           <SignInButtonContainer onClick={handleSignIn}> Sign In </SignInButtonContainer>
           <Image src={LogoIcon} />
           <MarginTop marginTop={16}>
             <Stepper current={step} direction={currentWidth > 796 ? "horizontal" : "vertical"}>
-              <EachStep title="Select Store" />
-              <EachStep title="Current Address" />
-              <EachStep title="Delivery Time" />
-              <EachStep title="Order Details" />
+              <EachStep title="Valiste myymälä" />
+              <EachStep title="Toimitusosoite" />
+              <EachStep title="Valiste toimitusaika" />
+              <EachStep title="Tuotteet" />
             </Stepper>
           </MarginTop>
-          <MarginTop marginTop={48}>
+          <MarginTop marginTop={step === 2 ? 8 : 32}>
             {stepComponents[step]}
           </MarginTop>
         </MainContainerWrapper>

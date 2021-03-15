@@ -11,6 +11,7 @@ const MaterialDropdown = (props) => {
     value = "",
     onOptionClick,
     disabled = false,
+    required = false,
     width = "100%",
     height = "40px",
     loading = false,
@@ -52,6 +53,7 @@ const MaterialDropdown = (props) => {
           width={width}
           height={height}
           disabled={disabled}
+          required={required}
         >
           <InputLabelComp> {title} </InputLabelComp>
           <Select

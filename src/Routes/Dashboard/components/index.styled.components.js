@@ -2,6 +2,8 @@ import styled from "styled-components";
 import Steps from 'antd/lib/steps';
 import Dropdown from "antd/lib/dropdown";
 import { TickIcon } from 'assets';
+import Menu from "antd/lib/menu";
+import Spin from "antd/lib/spin"
 
 const { Step } = Steps;
 
@@ -22,6 +24,12 @@ const DashboardWrapper = styled.div`
   margin-left: 32px;
   margin-top: 24px;
   height: calc(100% - 24px);
+
+  @media(max-width: 600px) {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const MainContainerWrapper = styled.div`
@@ -34,7 +42,7 @@ const MainContainerWrapper = styled.div`
   align-items: center;
   background-color: white;
   border-radius: 8px;
-  overflow: auto;
+  overflow: ${props => !props.loading && "auto"};
   box-shadow: 0 0 10px 0 rgb(31 41 51 / 10%);
   position: relative;
 `;
@@ -70,6 +78,7 @@ const EachStep = styled(Step)`
 `;
 
 const MarginTop = styled.div`
+  position: relative;
   margin-top: ${props => props.marginTop}px;
   width: 100%;
 `;
@@ -174,6 +183,98 @@ const SignInButtonContainer = styled.div`
   cursor: pointer;
 `;
 
+const SearchFieldContainer = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  position: relative;
+`;
+
+const OptionsMenu = styled(Menu)`
+  box-shadow: 1px 10px 10px 2px rgba(31, 41, 51, 0.1) !important;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  width: 100% !important;
+  height: 212px !important;
+  padding: 16px 0 !important;
+`;
+
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  overflow: auto;
+`;
+
+const InputField = styled.input`
+  width: 100%;
+  height: 40px;
+  outline: none;
+  box-shadow: none;
+  border-radius: 4px;
+  border: 1px solid #939393;
+`;
+
+const ErrorMessage = styled.p`
+  font-family: ${(props) => props.theme.paragraph.latoPara};
+  font-size: 16px;
+  color: #c78383;
+  margin: 0;
+  font-weight: bold;
+`;
+
+const TimesContainer = styled.div`
+  widht: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin-top: 32px;
+
+  @media(max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+const EachTime = styled.div`
+  display: flex;
+  align-items: center;
+  width: 200px;
+  height: 60px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  padding: 0 16px 0 10px;
+  background-image: linear-gradient(225deg,#fe563b,#d8214d);
+  color: #fff!important;
+  justify-content: center;
+  font-weight: bold;
+  justify-self: center;
+  cursor: pointer;
+  text-align: center;
+
+  @media(max-width: 600px) {
+    :nth-child(even) {
+      margin-top: 32px;
+    }
+  }
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 10001;
+`;
+
+const Loader = styled(Spin)``;
+
 export {
   DashboardMainWrapper,
   DashboardWrapper,
@@ -196,5 +297,14 @@ export {
   Circle,
   SuccessIcon,
   CircleContainer,
+  OptionsMenu,
+  SearchFieldContainer,
   SignInButtonContainer,
+  MainContainer,
+  InputField,
+  ErrorMessage,
+  TimesContainer,
+  EachTime,
+  Loader,
+  LoadingContainer,
 };

@@ -15,19 +15,21 @@ const FirstStep = (props) => {
     return (
         <React.Fragment>
             <MaterialDropdown
+                required={true}
                 value={city}
                 height="56px"
                 width="100%"
-                title="Valitse Kaupunki"
+                title="kaupunki list"
                 filterOptions={citiesList}
                 onOptionClick={setCity}
             />
             <MarginTop marginTop={32}>
                 <MaterialDropdown
+                    required={true}
                     value={store}
                     height="56px"
                     width="100%"
-                    title="Valitse Kauppa"
+                    title="kaupat list"
                     filterOptions={storesList}
                     onOptionClick={setStore}
                 />

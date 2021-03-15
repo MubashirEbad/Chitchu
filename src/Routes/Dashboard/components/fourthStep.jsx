@@ -8,47 +8,78 @@ import {
     MarginTop,
     MarginLeft,
     RightAlign,
+    CenterAlign,
+    Title,
+    Loader,
+    LoadingContainer,
 } from "./index.styled.components";
+
+import UploadFiles from "components/fileUpload";
 
 const FourthStep = (props) => {
     const { setStep } = props;
     const {
         name, setName,
         phone, setPhone,
-        description, setDescription
+        file, setFile,
+        otherInfo, setOtherInfo,
+        description, setDescription,
     } = React.useContext(DashboardContext);
 
     return (
         <React.Fragment>
-            <TextArea
-                rows={3}
-                required={true}
-                id="outlined-size-small"
-                label="Mitä sinun täytyy ostaa"
-                placeholder="esim: 2 X Maito Valio 1.5%, Ruisleipä kaksi kerta, Coca cola 1.5 X 2 pack, Malboro light soft savuke"
-                variant="outlined"
-                onChange={setDescription}
-            />
+            <UploadFiles setFile={setFile} />
+            <MarginTop marginTop={32}>
+                <CenterAlign>
+                    <Title> TAI </Title>
+                </CenterAlign>
+            </MarginTop>
+            <MarginTop marginTop={32}>
+                <TextArea
+                    rows={3}
+                    required={true}
+                    id="outlined-size-small"
+                    label="Mitä sinun täytyy ostaa"
+                    placeholder="esim: 2 X Maito Valio 1.5%, Ruisleipä kaksi kerta, Coca cola 1.5 X 2 pack, Malboro light soft savuke"
+                    variant="outlined"
+                    onChange={setDescription}
+                    marginTop="32 !important"
+                />
+            </MarginTop>
+            <MarginTop marginTop={32}>
+                <TextArea
+                    rows={3}
+                    required={false}
+                    id="outlined-size-small"
+                    label="Viesti kuljettajalle"
+                    placeholder="kirjoita lisäohjeita kuljettajalle, kuten esim. ovikoodi."
+                    variant="outlined"
+                    onChange={setOtherInfo}
+                    marginTop="0 !important"
+                />
+            </MarginTop>
             <MarginTop marginTop={32}>
                 <OutlineTextField
                     value={name}
-                    required={true}
                     id="outlined-size-small"
                     label="Toimitusosoite"
                     placeholder="Valitse kaupunki"
                     variant="outlined"
                     onChange={setName}
-                    required={true}
                     marginTop="0 !important"
                 />
             </MarginTop>
             <MarginTop marginTop={32}>
-                <PhoneField
-                    required={true}
+                <OutlineTextField
+                    textfieldType="number"
                     value={phone}
-                    label="Puhelin"
-                    placeholder="+122333"
-                    handleChange={setPhone}
+                    id="outlined-size-small"
+                    label="Puheline"
+                    placeholder=""
+                    variant="outlined"
+                    onChange={setPhone}
+                    required={true}
+                    marginTop="0 !important"
                 />
             </MarginTop>
             <MarginTop marginTop={48}>
@@ -66,7 +97,7 @@ const FourthStep = (props) => {
                             type="submit"
                             size="large"
                             marginTop="0px"
-                            disabled={!(name && description)}
+                            disabled={!(file || description)}
                             label="Tilaa Tilaus"
                             onClick={() => setStep(4)}
                             textCase="uppercase"

@@ -3,7 +3,14 @@ import PrimaryButton from "components/Buttons";
 import MaterialDropdown from "components/MaterilUIDropdown";
 import { DashboardContext } from '../dashboard.context';
 import { timeIntervalsList } from 'utils/application.utils';
-import { MarginTop, RightAlign, HintText, MarginLeft } from "./index.styled.components";
+import {
+    MarginTop,
+    RightAlign,
+    HintText,
+    MarginLeft,
+    TimesContainer,
+    EachTime,
+} from "./index.styled.components";
 
 const ThirdStep = (props) => {
     const { setStep } = props;
@@ -11,19 +18,24 @@ const ThirdStep = (props) => {
         time, setTime
     } = React.useContext(DashboardContext);
 
+    const renderOptions = () => {
+        const options = [];
+        for (let a = 0; a < timeIntervalsList.length; a += 2) {
+            options.push(
+                <TimesContainer>
+                    <EachTime onClick={() => setTime(timeIntervalsList[a])}>{timeIntervalsList[a].label}</EachTime>
+                    {
+                        timeIntervalsList[a + 1] && <EachTime onClick={() => setTime(timeIntervalsList[a + 1])}>{timeIntervalsList[a + 1].label}</EachTime>
+                    }
+                </TimesContainer>
+            )
+        }
+        return options;
+    }
+
     return (
         <React.Fragment>
-            <MaterialDropdown
-                value={time}
-                height="56px"
-                width="100%"
-                title="Valitse Kaupunki"
-                filterOptions={timeIntervalsList}
-                onOptionClick={setTime}
-            />
-            <MarginTop marginTop={4}>
-                <HintText> Normaali toimitusaika on 59 minuuttia </HintText>
-            </MarginTop>
+            {renderOptions()}
             <MarginTop marginTop={48}>
                 <RightAlign>
                     <PrimaryButton
