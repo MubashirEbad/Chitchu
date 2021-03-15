@@ -148,10 +148,6 @@ export const timeIntervalsList = [
     value: "20-22",
     label: "20-22",
   },
-  {
-    value: "22-24",
-    label: "22-24",
-  }
 ]
 
 export const calculateFileSize = (value) => {
