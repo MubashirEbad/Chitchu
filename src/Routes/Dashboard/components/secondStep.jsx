@@ -40,7 +40,7 @@ const SecondStep = (props) => {
         console.log(window);
         autoComplete = await new window.google.maps.places.Autocomplete(
             document.getElementById("autoComplete"), {
-            // types: ['establishment'],
+            types: ['address'],
             fields: ['place_id', 'geometry', 'name'],
             regions: ['locality', 'sublocality', 'postal_code']
         })
