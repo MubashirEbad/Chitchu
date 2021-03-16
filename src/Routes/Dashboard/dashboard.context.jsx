@@ -15,7 +15,7 @@ const DashboardContextProvider = ({ children }) => {
   const [building, setBuilding] = React.useState("");
   const [file, setFile] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const [step, setStep] = React.useState(0);
+  const [step, setStep] = React.useState(1);
 
   React.useEffect(() => {
     // submitForm();

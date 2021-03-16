@@ -41,7 +41,8 @@ const SecondStep = (props) => {
         autoComplete = await new window.google.maps.places.Autocomplete(
             document.getElementById("autoComplete"), {
             // types: ['establishment'],
-            fields: ['place_id', 'geometry', 'name']
+            fields: ['place_id', 'geometry', 'name'],
+            regions: ['locality', 'sublocality', 'postal_code']
         })
         autoComplete.addListener('place_changed', onPlaceChanged)
     }
