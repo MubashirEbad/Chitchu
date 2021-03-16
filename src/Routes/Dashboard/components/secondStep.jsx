@@ -23,6 +23,7 @@ const SecondStep = (props) => {
     const { setStep } = props;
     const {
         building, setBuilding,
+        inputText, setInputText,
         currentAddress, setCurrentAddress,
     } = React.useContext(DashboardContext);
     let autoComplete;
@@ -40,44 +41,30 @@ const SecondStep = (props) => {
         console.log(window);
         autoComplete = await new window.google.maps.places.Autocomplete(
             document.getElementById("autoComplete"), {
-            types: ['address'],
+            // types: ['etablishment'],
+            types: [],
             fields: ['place_id', 'geometry', 'name'],
-            regions: ['locality', 'sublocality', 'postal_code']
+            // regions: ['locality', 'sublocality', 'postal_code']
         })
         autoComplete.addListener('place_changed', onPlaceChanged)
     }
 
     const onPlaceChanged = () => {
         const place = autoComplete.getPlace();
+
         if (place.geometry) {
             const { lat, lng } = place.geometry.location
-            console.log(lat(), lng())
+            const locationValue = document.getElementById("autoComplete").value;
             setCurrentAddress({
                 lat: lat(),
                 lng: lng(),
-                location: autoComplete?.gm_accessors?.place?.De?.formattedPrediction || place?.name || "----"
+                location: locationValue || place?.name || "----"
             })
         } else {
             setCurrentAddress(null);
             setDistance(null);
         }
     }
-
-    // const calculateDistance = () => {
-    //     const lat = currentAddress.lat;
-    //     const lng = currentAddress.lng;
-    //     const R = 3958.8; // Radius of the Earth in miles
-
-    //     const storeLat = 60.390040 * (Math.PI / 180); // Convert degrees to radians
-    //     const rlat2 = lat * (Math.PI / 180); // Convert degrees to radians
-    //     const difflat = rlat2 - storeLat; // Radian difference (latitudes)
-    //     const difflon = (lng - 25.651800) * (Math.PI / 180); // Radian difference (longitudes)
-
-    //     const tempDistance = 2 * R * Math.asin(Math.sqrt(Math.sin(difflat / 2) * Math.sin(difflat / 2) + Math.cos(storeLat) * Math.cos(rlat2) * Math.sin(difflon / 2) * Math.sin(difflon / 2)));
-    //     setDistance(tempDistance);
-    //     console.log(tempDistance);
-    //     return tempDistance * 1.6;
-    // }
 
     const calculateDistance = () => {
         var directionsService = new window.google.maps.DirectionsService();
@@ -104,43 +91,10 @@ const SecondStep = (props) => {
         });
     }
 
-    // const calculateDistance = () => {
-    //     let lat1 = 60.390040;
-    //     let lat2 = currentAddress.lat;
-    //     let lng1 = 25.651800;
-    //     let lng2 = currentAddress.lng;
-
-    //     let R = 6378137;
-    //     let dLat = degreesToRadians(lat2 - lat1);
-    //     let dLong = degreesToRadians(lng2 - lng1);
-
-    //     let a = Math.sin(dLat / 2)
-    //         *
-    //         Math.sin(dLat / 2)
-    //         +
-    //         Math.cos(degreesToRadians(lat1))
-    //         *
-    //         Math.cos(degreesToRadians(lat1))
-    //         *
-    //         Math.sin(dLong / 2)
-    //         *
-    //         Math.sin(dLong / 2);
-
-    //     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    //     let distance = R * c;
-
-    //     console.log(distance);
-
-    //     return distance;
-    // }
-
-    const degreesToRadians = (degrees) => {
-        return degrees * Math.PI / 180;
-    }
-
     return (
         <React.Fragment>
             <InputField
+                value={currentAddress?.location}
                 type="text"
                 id="autoComplete"
                 onChange={(e) => {
@@ -149,7 +103,7 @@ const SecondStep = (props) => {
                         setCurrentAddress(null);
                     }
                 }}
-                placeholder="Katusonite (nimi ja numero)"
+                placeholder="Katuosoite (nimi ja numero)"
             />
             <MarginTop marginTop={32}>
                 <OutlineTextField
